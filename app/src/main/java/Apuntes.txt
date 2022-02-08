@@ -1,0 +1,14 @@
+1º Importaciones obligatorias (Importante)
+    - Dentro de Build Gradle (Modulo->App)
+    - Dentro de android{}:
+    viewBinding{
+            enabled = true
+        }
+        buildFeatures {
+            dataBinding true
+        }
+
+    - Dentro de de dependencies{}:
+        implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+        implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
+        implementation 'androidx.activity:activity-ktx:1.4.0'
