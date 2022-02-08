@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Match of the day</string>
+    <string name="main_lblMatch">Match of the day</string>
+    <string name="lblHomeTeamName">Home Team</string>
+    <string name="lblVisitingTeamName">Visiting Team</string>
+    <string name="main_3points">+3 POINTS</string>
+    <string name="main_2points">+2 POINTS</string>
+    <string name="main_free_throw">FREE THROW</string>
+    <string name="main_btnReset">RESET</string>
 </resources>
