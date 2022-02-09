@@ -1,12 +1,11 @@
 package com.example.matchoftheday
 
-
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.matchoftheday.databinding.MainActivityBinding
 
-    // 1º Hacer importaciones correspondientes (Está en Apuntes.txt)
+    // 1º Hacer importaciones correspondientes (Está en Apuntes.txt), si da error al ejecutar es porque no las estamos usando
     // 2º Crear el ViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -15,51 +14,40 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    // 9º Llamamos al setupViews y al observePoints
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setupViews()
+        observePoints()
     }
 
+    // 8º Creamos los clickListener para pasar los valores con los que se actualizará el mardcador
     private fun setupViews() {
-        binding.btnHomeTeam3Points.setOnClickListener { incrementHomePoints(3) }
-        binding.btnHomeTeam2Points.setOnClickListener { incrementHomePoints(2) }
-        binding.btnHomeTeamFreeThrow.setOnClickListener { incrementHomePoints(1) }
-        binding.btnVisitingTeam3Points.setOnClickListener { incrementsVisitingPoints(3) }
-        binding.btnVisitingTeam2Points.setOnClickListener { incrementsVisitingPoints(2) }
-        binding.btnVisitingTeamFreeThrow.setOnClickListener { incrementsVisitingPoints(1) }
-        binding.btnReset.setOnClickListener { reset() }
-        showHomePoints()
-        showVisitingPoints()
+        binding.btnHomeTeam3Points.setOnClickListener { viewModel.incrementHomePoints(3) }
+        binding.btnHomeTeam2Points.setOnClickListener { viewModel.incrementHomePoints(2) }
+        binding.btnHomeTeamFreeThrow.setOnClickListener { viewModel.incrementHomePoints(1) }
+        binding.btnVisitingTeam3Points.setOnClickListener { viewModel.incrementVisitingPoints(3)}
+        binding.btnVisitingTeam2Points.setOnClickListener { viewModel.incrementVisitingPoints(2) }
+        binding.btnVisitingTeamFreeThrow.setOnClickListener { viewModel.incrementVisitingPoints(1) }
+        binding.btnReset.setOnClickListener { viewModel.resetPoints() }
 
     }
 
-    // 4º Métodos para incrementar los puntos, en el setupViews se llama a estos métodos los cuales
-    // incrementan los valores de las variables guardadas en el ViewModel para así preservar su estado
+    // 7º Nos suscribimos al LiveData para que cada vez que cambie el valor se entregue,
+    // Al hacerlo, se llaman a los métodos showHome/VisitingPoints
 
-    // Hay que llamar a showHomePoints/showVisitingPoints ya que devuelven el texto del viewModel
-
-    private fun incrementHomePoints(points: Int){
-        viewModel.incrementHomePoints(points)
-        showHomePoints()
+    private fun observePoints(){
+        viewModel.homeTeamPoints.observe(this) { showHomePoints(it)} // El it se puede usar porque reciben un único parámetro
+        viewModel.visitingTeamPoints.observe(this) { showVisitingPoints(it)}
     }
 
-    private fun incrementsVisitingPoints(points: Int){
-        viewModel.incrementVisitingPoints(points)
-        showVisitingPoints()
-    }
-    private fun showHomePoints(){
-        binding.lblHomeTeamPoints.text = viewModel.homeTeamPoints.toString()
+    private fun showHomePoints(points: Int){
+        binding.lblHomeTeamPoints.text = points.toString()
     }
 
-    private fun showVisitingPoints(){
-        binding.lblVisitingTeamPoints.text = viewModel.visitingTeamPoints.toString()
-    }
-
-    private fun reset(){
-        viewModel.resetPoints()
-        showHomePoints()
-        showVisitingPoints()
+    private fun showVisitingPoints(points: Int){
+        binding.lblVisitingTeamPoints.text = points.toString()
     }
 
 

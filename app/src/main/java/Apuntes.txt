@@ -12,3 +12,7 @@
         implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
         implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
         implementation 'androidx.activity:activity-ktx:1.4.0'
+        implementation "androidx.lifecycle:lifecycle-extensions:2.4.0"
+
+2º Observar el LiveData significa que cada vez que se cambie el valor, se va a ejecutar el observador
+que yo le haya dicho, es decir, un codiguito que yo le voy a dar
